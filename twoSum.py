@@ -1,3 +1,4 @@
+# O(n) Time
 class Solution:
     def twoSum(self, nums, target):
         """
