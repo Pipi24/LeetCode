@@ -1,3 +1,4 @@
+#Time O(n)
 class Solution:
     # @return an integer
     def lengthOfLongestSubstring(self, s):
