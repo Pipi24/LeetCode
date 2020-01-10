@@ -1,30 +1,16 @@
 class Solution {
 public:
-    int myAtoi(string str) {
-        long long num = 0;
-        int flag = 0;
-        int i = 0;
-        while(str[i] == ' ')
-            ++i;
-        if(str[i] == '+')
-            flag = 1;
-        else if(str[i] == '-')
-            flag = -1;
-        else if(str[i] >= '0'&&str[i]<='9')
-            num = num*10 + str[i] - '0';
-        else
-            return 0;
-        
-        while(i<str.length()){
-            if(str[i] >= '0'&&str[i]<='9'){
-                num = num*10 + str[i] - '0';
-                if(flag == 1 && flag*num >= INT_MAX)
-                    return INT_MAX;
-                if(flag == -1 && flag*num <= INT_MIN)
-                    return INT_MAX;
+    vector<int> twoSum(vector<int>& nums, int target) {
+        map<int, int> dict;
+        vector<int> index;
+        for(int i=0; i<nums.size(); ++i){
+            if(dict.count(target - nums[i])){
+                index.push_back(dict[target-nums[i]]);
+                index.push_back(i);
+                return index;
             }
-            ++i;
+            dict[nums[i]] = i;
         }
-        return flag*num;
+        return index;
     }
 };
