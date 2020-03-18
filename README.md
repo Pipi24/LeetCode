@@ -1,1 +1,1 @@
-my leetcode code first time
+my OJ code first time
