@@ -28,3 +28,27 @@ public:
 	    return max(ans[0], ans[1]);
     }
 };
+
+struct SubtreeStatus {
+    int selected;
+    int notSelected;
+};
+
+class Solution {
+public:
+    SubtreeStatus dfs(TreeNode* o) {
+        if (!o) {
+            return {0, 0};
+        }
+        auto l = dfs(o->left);
+        auto r = dfs(o->right);
+        int selected = o->val + l.notSelected + r.notSelected;
+        int notSelected = max(l.selected, l.notSelected) + max(r.selected, r.notSelected);
+        return {selected, notSelected};
+    }
+
+    int rob(TreeNode* o) {
+        auto rootStatus = dfs(o);
+        return max(rootStatus.selected, rootStatus.notSelected);
+    }
+};
