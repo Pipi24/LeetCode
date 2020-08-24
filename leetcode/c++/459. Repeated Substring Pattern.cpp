@@ -74,11 +74,15 @@ public:
         int n = query.size();
         int m = pattern.size();
         vector<int> fail(m, -1);
+        //i是每个子串的后缀指针
         for (int i = 1; i < m; ++i) {
+            //j是每个子串的前缀指针
             int j = fail[i - 1];
+            //如果不匹配，fail 数组向左回退
             while (j != -1 && pattern[j + 1] != pattern[i]) {
                 j = fail[j];
             }
+            //前后缀匹配的话就在已匹配的基础上+1
             if (pattern[j + 1] == pattern[i]) {
                 fail[i] = j + 1;
             }
