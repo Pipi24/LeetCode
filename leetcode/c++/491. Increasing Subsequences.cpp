@@ -152,5 +152,48 @@ public:
 };
 
 
+/* 另一种判重方法：
+考虑一下去重问题，我使用了 O(n) 的判重方法：
+
+设 stack 中最后一个值的位置为 last。如果 stack 为空，则 last = -1。
+设当前正在处理的位置为 pos。
+如果在 nums 的子区间 [last+1, pos) 中，存在和 nums[pos] 相同的值，则当前 nums[pos] 必须丢弃，不然会产生重复的子序列。
+链接：https://leetcode-cn.com/problems/increasing-subsequences/solution/di-gui-gao-ding-liu-xing-dai-ma-pan-zhong-by-time-/ */
+
+class Solution {
+public:
+    // 判重代码；
+    bool is_first(const vector<int> &num, int last, int pos) {
+        for(int i = last+1; i < pos; i++) {
+            if(num[i] == num[pos]) {
+                return false;
+            }
+        }
+        return true;
+    }
+    void dfs(const vector<int> &nums, int last, int pos, vector<int> &stack, vector<vector<int>> &anw) {
+        if(nums.size() == pos) { return; } //到达末尾，直接范围吧
+        // 检查 nums[pos] 是否符合要求
+        if((stack.empty() || nums[pos] >= stack.back()) && is_first(nums, last, pos)) {
+            stack.push_back(nums[pos]);
+            if(stack.size() >= 2) { //大于 2 了，那就放进去吧
+                anw.push_back(stack);
+            } 
+            dfs(nums, pos, pos+1, stack, anw); // 继续处理下一个。
+            stack.pop_back(); // 将当前放入这个吐出来。
+        }
+        dfs(nums, last, pos+1, stack, anw);
+    }
+    vector<vector<int>> findSubsequences(vector<int>& nums) {
+        vector<vector<int>> anw;
+        vector<int> stack;
+        dfs(nums, -1, 0, stack, anw);
+        return anw;
+    }
+};
+
+
+
+
 
 
