@@ -1,30 +1,31 @@
 //https://leetcode-cn.com/problems/3sum/solution/man-hua-jue-bu-wu-ren-zi-di-xiang-kuai-su-kan-dong/
+//当我们需要枚举数组中的两个元素时，如果我们发现随着第一个元素的递增，第二个元素是递减的，那么就可以使用双指针的方法
 class Solution {
-public
-    vectorvectorint threeSum(vectorint& nums) {
-        vectorvectorint res;
-        vectorint tmp;
+public:
+    vector<vector<int> > threeSum(vector<int>& nums) {
+        vector<vector<int> > res;
         int len = nums.size(), left, right, sum;
-        if(len  3) return res;
+        if(len < 3) return res;
         sort(nums.begin(), nums.end());
-        for(int i = 0; i  len; i++)
+        for(int i = 0; i < len-2; i++)
         {
-            if(nums[i]  0) break;
-            if(i0 && nums[i] == nums[i-1]) continue;
+            //最小的数>0
+            if(nums[i] > 0) break;
+            if(i > 0 && nums[i] == nums[i-1]) continue;
             left = i+1, right = len - 1;
-            while(left  right)
+            while(left < right)
             {   
                 sum = nums[i] + nums[left] + nums[right];
                 if(sum == 0)
-                {   
-                    tmp = {nums[i], nums[left], nums[right]};
-                    res.emplace_back(tmp);
-                    while(left  right && nums[left] == nums[left+1]) left++;
-                    while(left  right && nums[right] == nums[right-1]) right--;
+                { 
+                    res.push_back({nums[i], nums[left], nums[right]});
+                    //跳过相同数
+                    while(left < right && nums[left] == nums[left+1]) left++;
+                    while(left < right && nums[right] == nums[right-1]) right--;
                     left++;
                     right--;
                 }
-                else if(sum  0) right--;
+                else if(sum > 0) right--;
                 else left++;
             }
         }
