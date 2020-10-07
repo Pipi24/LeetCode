@@ -3,6 +3,7 @@ public:
     vector<int> ans, sz, dp;
     vector<vector<int>> graph;
 
+    //以u为根的树，u节点的和
     void dfs(int u, int f) {
         //初始化当前节点
         sz[u] = 1;
@@ -46,12 +47,15 @@ public:
         sz.resize(N, 0);
         dp.resize(N, 0);
         graph.resize(N, {});
+        //得到每一个节点的相连节点
         for (auto& edge: edges) {
             int u = edge[0], v = edge[1];
             graph[u].emplace_back(v);
             graph[v].emplace_back(u);
         }
+        //先来一次树形dp，使每个节点获得当前树的对应dp和sz
         dfs(0, -1);
+        //dfs换根，对当前节点和每个子节点进行调换，加上或减去节点的贡献
         dfs2(0, -1);
         return ans;
     }
