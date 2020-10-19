@@ -47,3 +47,40 @@ public:
         return head;
     }
 };
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode* dummy = new ListNode(0, head);
+
+        ListNode* first = dummy;
+
+        //要指向哑节点，好处理删除第一个节点
+        ListNode* second = dummy;
+
+        while(first){
+            // first 先走n+1步, 因为最后的判断条件是first不为空,此时second才是走到了要删除节点的前面一个节点
+            if(n>=0){
+                first = first->next;
+                n--;
+            }
+            else{
+                first = first->next;
+                second = second->next;
+            }
+        }
+        second->next = second->next->next;
+        return dummy->next;
+    }
+};
