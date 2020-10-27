@@ -57,3 +57,37 @@ public:
         return ans;
     }
 };
+
+
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode *root) {
+        vector<int> res;
+        if (root == nullptr) {
+            return res;
+        }
+
+        stack<TreeNode *> stk;
+        TreeNode *prev = nullptr;
+        while (root != nullptr || !stk.empty()) {
+            while (root != nullptr) {
+                stk.emplace(root);
+                root = root->left;
+            }
+            root = stk.top();
+            stk.pop();
+            //如果右节点为空或者已经访问
+            if (root->right == nullptr || root->right == prev) {
+                res.emplace_back(root->val);
+                //记录上一个访问的节点
+                prev = root;
+                //当前节点已经访问，需要重置root
+                root = nullptr;
+            } else {
+                stk.emplace(root);
+                root = root->right;
+            }
+        }
+        return res;
+    }
+};
