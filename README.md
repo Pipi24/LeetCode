@@ -1,1 +1,1 @@
-my OJ code first time
+my OJ code
