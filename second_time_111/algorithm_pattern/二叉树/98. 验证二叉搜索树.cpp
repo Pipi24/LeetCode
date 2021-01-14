@@ -9,8 +9,55 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+
 /*
-1. 递归
+1. 按照定义，找到左子树最大值，右子树最小值，与根比较，在递归左子树和右子树
+时间复杂度 : O(n^2)，叶子节点最坏会被访问N次，总共N个节点，所以N^2
+空间复杂度 : O(n)，高度等于节点数，递归左右子节点
+*/
+
+class Solution {
+public:
+    /* 返回右子树当中的最小值 */
+    int minValueNode(struct TreeNode* node)
+    {
+        struct TreeNode* current = node;
+
+        /*一直向左走，找到最小值*/
+        while (current && current->left != NULL)
+            current = current->left;
+
+        return current->val;
+    }
+
+    /* 返回左子树当中的最大值 */
+    int maxValueNode(struct TreeNode* node)
+    {
+        struct TreeNode* current = node;
+
+        /*一直向左走，找到最大值*/
+        while (current && current->right != NULL)
+            current = current->right;
+
+        return current->val;
+    }
+
+    bool isValidBST(struct TreeNode* root){
+        if(root == NULL) return true;
+        //当前节点是否满足
+        if(root->left != NULL && maxValueNode(root->left) >= root->val) return false;
+        if(root->right != NULL && minValueNode(root->right) <= root->val) return false;
+
+        //左右子树是否满足
+        if(!isValidBST(root->left) || !isValidBST(root->right)) return false;
+        return true;
+    }
+
+};
+
+
+/*
+2. 递归
 关键：helper函数的意义
 时间复杂度 : O(n)，其中 n 为二叉树的节点个数。
 空间复杂度 : O(n)，高度等于节点数
@@ -33,23 +80,12 @@ public:
 };
 
 /*
-2. 中序遍历
+3. 中序遍历
 BST的中序遍历是升序序列
 时间复杂度 : O(n)，其中 n 为二叉树的节点个数。
 空间复杂度 : O(n)，高度等于节点数
 */
 
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
 class Solution {
 public:
     bool isValidBST(TreeNode* root) {
