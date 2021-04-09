@@ -1,3 +1,6 @@
+class Solution {
+public:
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
         int m = obstacleGrid.size();
         int n = obstacleGrid[0].size();
         vector<vector<int>> dp(m, vector<int>(n, 0));
@@ -10,9 +13,10 @@
             }
         }
         return dp[m - 1][n - 1];
+    }
+};
 
-
-        class Solution {
+class Solution {
 public:
     int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
         int n = obstacleGrid.size(), m = obstacleGrid[0].size();
