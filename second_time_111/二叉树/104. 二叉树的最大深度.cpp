@@ -16,6 +16,32 @@ max(left, right)+1
 时间复杂度：O(n)，其中 n 为二叉树节点的个数。每个节点在递归中只被遍历一次。
 空间复杂度：O(height)，其中height 表示二叉树的高度。递归函数需要栈空间，而栈空间取决于递归的深度，因此空间复杂度等价于二叉树的高度。
 */
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int getDepth(TreeNode* node) {
+        if (node == NULL) return 0;
+        int leftDepth = getDepth(node->left);       // 左
+        int rightDepth = getDepth(node->right);     // 右
+        int depth = 1 + max(leftDepth, rightDepth); // 中
+        return depth;
+    }
+    int maxDepth(TreeNode* root) {
+        return getDepth(root);
+    }
+};
+
+
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
