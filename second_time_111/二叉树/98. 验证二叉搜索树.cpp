@@ -79,6 +79,23 @@ public:
     }
 };
 
+
+class Solution {
+public:
+    long long maxVal = LONG_MIN; // 因为后台测试数据中有int最小值
+    bool isValidBST(TreeNode* root) {
+        if (root == NULL) return true;
+
+        bool left = isValidBST(root->left);
+        // 中序遍历，验证遍历的元素是不是从小到大
+        if (maxVal < root->val) maxVal = root->val;
+        else return false;
+        bool right = isValidBST(root->right);
+
+        return left && right;
+    }
+};
+
 /*
 3. 中序遍历
 BST的中序遍历是升序序列
